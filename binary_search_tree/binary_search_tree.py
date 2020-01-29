@@ -14,14 +14,14 @@ class BinarySearchTree:
     def insert(self, value):
         # if value is greater or equal to the value of the node, then if there is nothing on the right branch, the leaf becomes the right branch
         if value >= self.value:
-            if self.right is None:
+            if self.right == None:
                 self.right = BinarySearchTree(value)
         #otherwise, run insert again on the leaf to the right
             else:
                 self.right.insert(value)
         # if the value is less than the value of the node, if there isn't anything on the left branch, the leaf becomes the left branch
         elif value < self.value:
-            if self.left is None:
+            if self.left == None:
                 self.left = BinarySearchTree(value)
         # otherwise, run insert again on the leaf to the left
             else:
@@ -31,11 +31,30 @@ class BinarySearchTree:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        #if target = the value of the node, return true
+        if target == self.value:
+            return True
+        #if target > the value of the node, move right and repeat
+        if target > self.value:
+            if self.right == None:
+                return False
+            else:
+                return self.right.contains(target)
+        #if target < the value of the node, move left and repeat
+        elif target < self.value:
+            if self.left == None:
+                return False
+            else:
+                return self.left.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        # if there isn't a node to the right, return the value of current node
+        if self.right == None:
+            return self.value
+        # otherwise move to the next node to the right and run get_max again
+        else:
+            return self.right.get_max()
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
