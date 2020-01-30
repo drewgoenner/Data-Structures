@@ -73,25 +73,78 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
+        #if there is a node, continue moving to the left until you hit the end
+        if node:
+            self.in_order_print(node.left)
+        #print the value of the lowest node
+            print(node.value)
+        #move back to the right, printing each node until you get to the highest node
+            self.in_order_print(node.right)
         
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        #establish the queue and set it's initial
+        queue = Queue()
+        current = node
+        queue.enqueue(current)
+        values = ''
+        #while the queue exists, drop an item from the queue and print its value
+        while queue.size > 0:
+            current = queue.dequeue()
+            print(current.value)
+        #if there is a left branch, travel down it adding to queue
+            if current.left:
+                queue.enqueue(current.left)
+        #same with the right
+            if current.right:
+                queue.enqueue(current.right)
+
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        #create the stack and set it to the initial node
+        stack = Stack()
+        current = node
+        stack.push(current)
+        #while the stack exists, drop items from it and print their value
+        while stack.size > 0:
+            current = stack.pop()
+            print(current.value)
+        #if there are nodes left, add them to stack
+            if current.left:
+                stack.push(current.left)
+        #same with right
+            if current.right:
+                stack.push(current.right)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
 
     # Print In-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        #the preorder traversal will start with the initial node, print it, then travel left, printing until the smallest number, then move back and start taking the right branches
+        #if empty, return
+        if not node:
+            return
+        #print the value of the node
+        print(node.value)
+        #move to the left and repeat
+        node.pre_order_dft(node.left)
+        #move to the right and repeat
+        node.pre_order_dft(node.right)
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        #the postorder traversal will go to the lowest number, print it, then start moving right and printing those numbers
+        #if empty, return
+        if not node:
+            return
+        #move all the way to the left
+        node.post_order_dft(node.left)
+        #start mmoving right and printing the values of each node until the tree is traversed.
+        node.post_order_dft(node.right)
+        print(node.value)
